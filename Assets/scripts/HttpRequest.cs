@@ -6,8 +6,6 @@ using UnityEngine.Networking;
 
 public class HttpRequest : MonoBehaviour
 {
-    List<MAF> MAFs = new List<MAF>();
-
 
     private Action<string> ResponseAct;
     private Action<Texture2D> ResponseAct_Image;
@@ -124,16 +122,14 @@ public class HttpRequest : MonoBehaviour
         else
         {
             string jsonResponse = request.downloadHandler.text;
-            request.Dispose();
 
-            MAFs = new List<MAF>(JsonUtility.FromJson<MAFs>(jsonResponse).list);
-
+            global_manager.MAFs = new List<MAF>(JsonUtility.FromJson<MAFs>(jsonResponse).list);
 
             StartCoroutine(ResetMAFs());
-            for (int i = 0; i < MAFs.Count; i++)
+            for (int i = 0; i < global_manager.MAFs.Count; i++)
             {
                 yield return null;
-                StartCoroutine(InstallImagForMAF(url_maf_image, MAFs[i])); 
+                StartCoroutine(InstallImagForMAF(url_maf_image, global_manager.MAFs[i]));
             }
         }
 
@@ -143,10 +139,11 @@ public class HttpRequest : MonoBehaviour
     {
         ui_MAFContainer.ClearMAFs();
         yield return null;
-        for (int i = 0; i < MAFs.Count; i++)
-            ui_MAFContainer.AddNewMaf(MAFs[i]);
+        for (int i = 0; i < global_manager.MAFs.Count; i++)
+        {
+            ui_MAFContainer.AddNewMaf(global_manager.MAFs[i]);
+        }
         yield return null;
-        ui_MAFContainer.SetBarValue(0);
     }
 
     private IEnumerator InstallImagForMAF(string base_url, MAF maf)

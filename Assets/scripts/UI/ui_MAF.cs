@@ -14,7 +14,7 @@ public class ui_MAF : MonoBehaviour, IDragHandler, IEndDragHandler
         get { return _connected_maf; }
         set
         {
-            if(_connected_maf != null) _connected_maf.ImageChange -= OnImageChange;
+            if (_connected_maf != null) _connected_maf.ImageChange -= OnImageChange;
             _connected_maf = value;
             _connected_maf.ImageChange += OnImageChange;
         }
@@ -27,7 +27,8 @@ public class ui_MAF : MonoBehaviour, IDragHandler, IEndDragHandler
     }
     void OnDestroy()
     {
-        _connected_maf.ImageChange -= OnImageChange;
+        if (_connected_maf != null)
+            _connected_maf.ImageChange -= OnImageChange;
     }
 
     public void SetTexture(Texture2D texture2D)
@@ -66,9 +67,7 @@ public class ui_MAF : MonoBehaviour, IDragHandler, IEndDragHandler
         able_drag = true;
         dd_obj_temp = null;
     }
-
-
-
+    
     private void OnImageChange(Texture2D texture2D)
     {
         rawImage.texture = texture2D;

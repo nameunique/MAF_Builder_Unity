@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ui_MAFContainer : MonoBehaviour
+public class ui_MAFContainer_Curr : MonoBehaviour
 {
     [SerializeField] private GameObject uiMAFTemplate_get;
 
@@ -11,14 +11,14 @@ public class ui_MAFContainer : MonoBehaviour
     private static GameObject uiMAFTemplate;
     private static Transform uiMAFParent;
 
-
-
     private static List<Transform> uiMAFs = new List<Transform>();
 
 
     void Awake()
     {
         uiMAFTemplate = uiMAFTemplate_get;
+        
+        HideItself();
     }
 
     void Start()
@@ -41,12 +41,10 @@ public class ui_MAFContainer : MonoBehaviour
         GameObject item_gameobj = Instantiate(uiMAFTemplate, uiMAFParent);
         item_gameobj.SetActive(true);
         
-        ui_MAF item = item_gameobj.GetComponent<ui_MAF>();
+        ui_MAF_Curr item = item_gameobj.GetComponent<ui_MAF_Curr>();
         item.connected_maf = maf;
         item.rawImage.texture = maf.Image;
     }
-
-
 
 
     public void HideItself()

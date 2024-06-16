@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class ddd_MAF : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class ddd_MAF : MonoBehaviour
 
     public void ResetOfSizeMAF()
     {
-        float[] splitted_size = new float[3]; 
+        float[] splitted_size = new float[3];
         try
         {
             splitted_size = connected_maf.Dimensions.Split("x").Select(x => float.Parse(x)).ToArray();
@@ -34,5 +35,19 @@ public class ddd_MAF : MonoBehaviour
         }
 
         transform.localScale = new Vector3(splitted_size[0] / 1000f, splitted_size[2] / 1000f, splitted_size[1] / 1000f);
+    }
+
+
+
+
+    private void OnEnable()
+    {
+        if (gameObject.name != "3d_maf_template")
+            global_manager.AddNewdddMAF(this);
+    }
+    private void OnDestroy()
+    {
+        if (gameObject.name != "3d_maf_template")
+            global_manager.RemovedddMAF(this);
     }
 }

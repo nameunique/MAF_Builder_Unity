@@ -9,7 +9,7 @@ public class ddd_MAFContainer : MonoBehaviour
     private static GameObject dddMAFTemplate;
     private static Transform dddMAFParent;
 
-    private static List<Transform> dddMAFs = new List<Transform>();
+    public static List<Transform> dddMAFs = new List<Transform>();
 
 
     void Awake()
@@ -40,6 +40,9 @@ public class ddd_MAFContainer : MonoBehaviour
         ddd_MAF item = item_gameobj.GetComponent<ddd_MAF>();
         item.connected_maf = maf;
         item.SetTexture(maf.Image);
+
+        dddMAFs.Add(item_gameobj.transform);
+        global_manager.CallMAFsChange();
 
         return item_gameobj;
     }
