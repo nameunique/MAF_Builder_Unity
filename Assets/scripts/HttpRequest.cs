@@ -126,7 +126,8 @@ public class HttpRequest : MonoBehaviour
             global_manager.MAFs = new List<MAF>(JsonUtility.FromJson<MAFs>(jsonResponse).list);
 
             StartCoroutine(ResetMAFs());
-            for (int i = 0; i < global_manager.MAFs.Count; i++)
+            // for (int i = 0; i < global_manager.MAFs.Count; i++)
+            for (int i = 0; i < 100; i++)
             {
                 yield return null;
                 StartCoroutine(InstallImagForMAF(url_maf_image, global_manager.MAFs[i]));
